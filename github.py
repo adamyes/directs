@@ -305,14 +305,18 @@ class Database:
             return self._file_in_cache(path)
         return None
 
-    def get(self, path: str) -> Union[Response, None]:
+    def get(self, path: str, FORCE_UPDATE=False) -> Union[Response, None]:
         """
         Give it a path or sha, and it'll return a Response if found
         else just None
         :param path: the PATH or SHA of the thing you want e.g.
         path: test/test.json
         sha:  f1a84e92cdfcdb32d2ebd94b015094e4d8b13c34
+        :param FORCE_UPDATE: Forces caching database ALL database again content before fetching
         """
+        if FORCE_UPDATE:
+            self._update_all_sha()
+        
         _path = validate_path(path)
 
         # If main directory was chosen
