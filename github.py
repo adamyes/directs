@@ -3,7 +3,7 @@ import requests
 import json
 import base64
 from pathlib import Path
-from typing import Union
+from typing import Union, List, Tuple
 
 
 def npj(v: dict):
@@ -227,7 +227,7 @@ class Response:
         return base64.decodebytes(self.__base64.encode('ascii')) if not self.__is_tree() else None
 
     @property
-    def children(self) -> [Child]:
+    def children(self) -> List[Child]:
         """
         Returns Children of directory,
         e.g. db.get("path") -> [Child, Child]
@@ -240,7 +240,6 @@ class Database:
     def __init__(self, token: str, name: str):
         """
         Declares a Github Database variable
-
         :param token: Github user token
         :param name: The name of the repo that
         will/is going to store the data. If it
@@ -346,7 +345,7 @@ class Database:
         # Finally deliver the response
         return Response(blob, self._get_headers(), self)
 
-    def __upload_blob(self, _data) -> (str, int):
+    def __upload_blob(self, _data) -> Tuple[str, int]:
         """
         uploads blob to github and return sha and size
         :param _data:
@@ -471,7 +470,7 @@ class Database:
         else:
             self.__cache['tree'].append(info)
 
-    def _all_cache_paths(self) -> [str]:
+    def _all_cache_paths(self) -> List[str]:
         """
         Returns a list of all paths stored in cache
         """
@@ -531,7 +530,7 @@ class Database:
         else:
             print(f"Item {path} was not found")
 
-    def _get_tree_from_github(self, path: str, sha: str, recursive=False) -> [dict]:
+    def _get_tree_from_github(self, path: str, sha: str, recursive=False) -> List[dict]:
         """
         Gets children of a tree
         :param path: The Path of the tree (to be used in mixing the child and parent path)
