@@ -1,7 +1,5 @@
 # REQUIREMENTS: requests, flask
 
-
-from os import abort
 from flask import Flask
 import flask, json, requests as r
 
@@ -43,7 +41,7 @@ def r1():
         try:
             db.set(headers.get('path'), data)
         except:
-            abort(flask.Response('An error occurred', 400))
+            flask.abort(flask.Response('An error occurred', 400))
         return 'success'
     elif flask.request.method == 'DELETE':
         if not "path" in headers: 
@@ -51,7 +49,7 @@ def r1():
         try:
             db.remove(headers.get('path'))
         except:
-            abort(flask.Response('An error occurred', 400))
+            flask.abort(flask.Response('An error occurred', 400))
         return 'success'
 
 app.run(port=5000)
