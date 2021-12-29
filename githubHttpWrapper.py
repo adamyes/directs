@@ -15,7 +15,7 @@ app = Flask(__name__)
 db = Database(TOKEN, REP)
 
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST', 'DELETE'])
 def r1():
     headers = flask.request.headers
     path = headers.get('path') if "path" in headers else "."
