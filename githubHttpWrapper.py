@@ -20,6 +20,8 @@ def r1():
     if flask.request.method == 'GET':
         # TODO GET SHA
         item = db.get(path)
+        if item is None:
+            return ''
         if item.type == "directory":
             response = flask.make_response({**{"children": [x.to_dict() for x in item.children]}, **item.to_dict()})
         else:
